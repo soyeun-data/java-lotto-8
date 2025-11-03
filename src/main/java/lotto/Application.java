@@ -1,48 +1,91 @@
 package lotto;
 
 import camp.nextstep.edu.missionutils.Console;
+import camp.nextstep.edu.missionutils.Randoms;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
         // TODO: 프로그램 구현
         int money;
         money = inputPurchaseAmount();
-        outputLottoCntAndNumbers(money);
+
+        List<Lotto> lottos = outputLottoCntAndNumbers(money);
+        Lotto winningNumbers = inputWinningNumbers();
     }
 
-    public static void outputLottoCntAndNumbers(int money) {
+    public static Lotto inputWinningNumbers() {
+        while (true) {
+            try {
+                System.out.println("당첨 번호를 입력해 주세요.");
+                String input = Console.readLine();
+
+                validateInputBlank(input);
+
+                List<Integer> winningNumbers = Arrays.stream(input.split(","))
+                        .map(String::trim)
+                        .map(Integer::parseInt)
+                        .toList();
+
+                return new Lotto(winningNumbers);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println("[ERROR] 당첨 번호 입력값이 잘못되었습니다.");
+            }
+        }
+    }
+
+    public static List<Lotto> outputLottoCntAndNumbers(int money) {
         int lottoCnt = money / 1000;
         System.out.println(lottoCnt + "개를 구매했습니다.");
+        List<Lotto> lottos = new ArrayList<>();
+
+        for (int i = 0; i < lottoCnt; i++) {
+            List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6)
+                    .stream()
+                    .sorted()
+                    .toList();
+
+            Lotto lotto = new Lotto(numbers);
+            lottos.add(lotto);
+            System.out.println(lotto.getNumbers());
+            System.out.println();
+        }
+        return lottos;
     }
 
     public static int inputPurchaseAmount() {
-        int money = 0;
-
         while (true) {
             try {
                 System.out.println("구입금액을 입력해 주세요.");
                 String input = Console.readLine();
 
-                money = validateInputBlank(input);
+                validateInputBlank(input);
+                int money = Integer.parseInt(input);
 
                 validateMoneyPositive(money);
                 validateThousandUnit(money);
 
-                break;
+                System.out.println();
+                return money;
+
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             } catch (Exception e) {
-                throw new IllegalArgumentException("[ERROR] 값이 잘못 입력되었습니다.");
+                System.out.println("[ERROR] 값이 잘못 입력되었습니다.");
             }
         }
-        return money;
     }
 
-    public static int validateInputBlank(String input) {
+    public static void validateInputBlank(String input) {
         if (input == null || input.trim().isBlank()) {
             throw new IllegalArgumentException("[ERROR] 값이 입력되지 않았습니다.");
         }
-        return Integer.parseInt(input);
     }
 
     public static void validateMoneyPositive(int money) {
