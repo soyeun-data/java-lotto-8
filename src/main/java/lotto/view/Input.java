@@ -6,7 +6,7 @@ import lotto.Lotto;
 import java.util.Arrays;
 import java.util.List;
 
-import static lotto.validator.validator.*;
+import static lotto.validator.Validator.*;
 
 public class Input {
     public static int inputBonusNumber() {

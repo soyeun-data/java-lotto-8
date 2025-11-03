@@ -1,9 +1,6 @@
 package lotto.validator;
 
-import javax.xml.validation.Validator;
-
-public final class validator {
-    private Validator() {}
+public final class Validator {
 
     public static void validateNumberRange(int number) {
         if (number < 1 || number > 45) {
