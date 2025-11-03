@@ -16,11 +16,35 @@ public class Application {
 
         List<Lotto> lottos = outputLottoCntAndNumbers(money);
         Lotto winningNumbers = inputWinningNumbers();
+        int bonusNumber = inputBonusNumber();
+    }
+
+    public static int inputBonusNumber() {
+        while (true) {
+            try {
+                System.out.println();
+                System.out.println("보너스 번호를 입력해 주세요.");
+                String input = Console.readLine();
+
+                validateInputBlank(input);
+
+                int bonusNumber = Integer.parseInt(input);
+
+                validateNumberRange(bonusNumber);
+
+                return bonusNumber;
+            } catch (NumberFormatException e) {
+                System.out.println("[ERROR] 숫자만 입력해야 합니다.");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public static Lotto inputWinningNumbers() {
         while (true) {
             try {
+                System.out.println();
                 System.out.println("당첨 번호를 입력해 주세요.");
                 String input = Console.readLine();
 
@@ -32,10 +56,10 @@ public class Application {
                         .toList();
 
                 return new Lotto(winningNumbers);
+            } catch (NumberFormatException e) {
+                System.out.println("[ERROR] 당첨 번호 입력값이 잘못 되었습니다.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
-            } catch (Exception e) {
-                System.out.println("[ERROR] 당첨 번호 입력값이 잘못되었습니다.");
             }
         }
     }
@@ -54,7 +78,6 @@ public class Application {
             Lotto lotto = new Lotto(numbers);
             lottos.add(lotto);
             System.out.println(lotto.getNumbers());
-            System.out.println();
         }
         return lottos;
     }
@@ -74,11 +97,17 @@ public class Application {
                 System.out.println();
                 return money;
 
+            } catch (NumberFormatException e) {
+                System.out.println("[ERROR] 값이 잘못 입력되었습니다.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
-            } catch (Exception e) {
-                System.out.println("[ERROR] 값이 잘못 입력되었습니다.");
             }
+        }
+    }
+
+    public static void validateNumberRange(int number) {
+        if (number < 1 || number > 45) {
+            throw new IllegalArgumentException("[ERROR] 보너스 번호는 1~45 사이여야 합니다.");
         }
     }
 
