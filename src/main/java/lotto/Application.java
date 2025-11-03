@@ -17,6 +17,9 @@ public class Application {
         List<Lotto> lottos = outputLottoCntAndNumbers(money);
         Lotto winningNumbers = inputWinningNumbers();
         int bonusNumber = inputBonusNumber();
+
+        LottoResult result = new LottoResult(lottos, winningNumbers, bonusNumber);
+        result.printStatistics();
     }
 
     public static int inputBonusNumber() {
