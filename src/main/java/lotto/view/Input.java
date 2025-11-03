@@ -1,7 +1,7 @@
 package lotto.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import lotto.Lotto;
+import lotto.model.Lotto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 import static lotto.validator.Validator.*;
 
 public class Input {
-    public static int inputBonusNumber() {
+    public int inputBonusNumber() {
         while (true) {
             try {
                 System.out.println();
@@ -31,7 +31,7 @@ public class Input {
         }
     }
 
-    public static Lotto inputWinningNumbers() {
+    public Lotto inputWinningNumbers() {
         while (true) {
             try {
                 System.out.println();
@@ -54,7 +54,7 @@ public class Input {
         }
     }
 
-    public static int inputPurchaseAmount() {
+    public int inputPurchaseAmount() {
         while (true) {
             try {
                 System.out.println("구입금액을 입력해 주세요.");
