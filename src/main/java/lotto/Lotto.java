@@ -20,4 +20,14 @@ public class Lotto {
     public List<Integer> getNumbers() {
         return numbers;
     }
+
+    public int countMatchingNumbers(Lotto winningLotto) {
+        return (int) numbers.stream()
+                .filter(winningLotto.getNumbers()::contains)
+                .count();
+    }
+
+    public boolean hasBonusNumber(int bonusNumber) {
+        return numbers.contains(bonusNumber);
+    }
 }
