@@ -5,12 +5,25 @@ import camp.nextstep.edu.missionutils.Console;
 public class Application {
     public static void main(String[] args) {
         // TODO: 프로그램 구현
+        int money;
+        money = inputPurchaseAmount();
+        outputLottoCntAndNumbers(money);
+    }
+
+    public static void outputLottoCntAndNumbers(int money) {
+        int lottoCnt = money / 1000;
+        System.out.println(lottoCnt + "개를 구매했습니다.");
+    }
+
+    public static int inputPurchaseAmount() {
+        int money = 0;
+
         while (true) {
             try {
                 System.out.println("구입금액을 입력해 주세요.");
                 String input = Console.readLine();
 
-                int money = validateInputBlank(input);
+                money = validateInputBlank(input);
 
                 validateMoneyPositive(money);
                 validateThousandUnit(money);
@@ -22,6 +35,7 @@ public class Application {
                 throw new IllegalArgumentException("[ERROR] 값이 잘못 입력되었습니다.");
             }
         }
+        return money;
     }
 
     public static int validateInputBlank(String input) {
