@@ -10,15 +10,9 @@ public class Application {
                 System.out.println("구입금액을 입력해 주세요.");
                 String input = Console.readLine();
 
-                if (input == null || input.trim().isBlank()) {
-                    throw new IllegalArgumentException("[ERROR] 값이 입력되지 않았습니다.");
-                }
+                int money = inputBlankValidation(input);
 
-                int money = Integer.parseInt(input);
-
-                if (money <= 0) {
-                    throw new IllegalArgumentException("[ERROR] 입력된 금액이 음수입니다.");
-                }
+                checkMoneyValidation(money);
 
                 break;
             } catch (IllegalArgumentException e) {
@@ -28,4 +22,18 @@ public class Application {
             }
         }
     }
+
+    public static int inputBlankValidation(String input) {
+        if (input == null || input.trim().isBlank()) {
+            throw new IllegalArgumentException("[ERROR] 값이 입력되지 않았습니다.");
+        }
+        return Integer.parseInt(input);
+    }
+
+    public static void checkMoneyValidation(int money) {
+        if (money <= 0) {
+            throw new IllegalArgumentException("[ERROR] 입력된 금액이 음수입니다.");
+        }
+    }
+
 }
